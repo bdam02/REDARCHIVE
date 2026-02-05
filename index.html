@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>REDARCHIVE</title>
+
+<style>
+:root {
+  --bg: #000;
+  --red: #8b0000;
+  --text: #cfcfcf;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Courier New", monospace;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.scanlines::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.02),
+    rgba(255,255,255,0.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 999;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+h1 {
+  color: var(--red);
+  font-size: 3rem;
+  letter-spacing: 4px;
+  animation: glitch 2s infinite;
+}
+
+@keyframes glitch {
+  0% { text-shadow: 2px 0 red; }
+  20% { text-shadow: -2px 0 red; }
+  40% { text-shadow: 2px 2px red; }
+  60% { text-shadow: -2px -2px red; }
+  100% { text-shadow: 0 0 red; }
+}
+
+.warning {
+  border: 1px solid var(--red);
+  padding: 15px;
+  margin: 30px 0;
+  color: #ff4444;
+}
+
+button {
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background: var(--red);
+  color: #000;
+}
+
+.hidden {
+  display: none;
+}
+
+.profile {
+  border: 1px solid #300;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.redacted {
+  background: #300;
+  color: #300;
+}
+
+.log {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+</style>
+</head>
+
+<body class="scanlines">
+<div class="container">
+
+  <h1>REDARCHIVE</h1>
+  <p>Decentralized archive of corrupted records</p>
+
+  <div class="warning">
+    ACCESS LOGGED<br>
+    DATA INTEGRITY: UNSTABLE<br>
+    ALL RECORDS ARE FICTIONAL
+  </div>
+
+  <button onclick="enterArchive()">ENTER ARCHIVE</button>
+
+  <div id="archive" class="hidden">
+
+    <div class="profile">
+      <strong>Subject_017</strong><br>
+      Status: PARTIALLY LEAKED<br>
+      Risk Level: ████░░░░░<br><br>
+      ALIAS: "NightSignal"<br>
+      IP TRACE: 192.168.***.***<br>
+      LOCATION: <span class="redacted">REDACTED</span><br>
+      DATA SOURCE: UNKNOWN<br><br>
+      <button onclick="deny()">REVEAL MORE</button>
+    </div>
+
+    <div class="profile">
+      <strong>Subject_042</strong><br>
+      Status: CORRUPTED<br>
+      Last Activity: UNKNOWN<br><br>
+      FILES:
+      <ul>
+        <li>chatlog_03.txt</li>
+        <li>metadata.bin</li>
+        <li>image_dump.zip</li>
+      </ul>
+      <button onclick="deny()">DOWNLOAD ALL</button>
+    </div>
+
+    <div class="log" id="log"></div>
+
+  </div>
+
+</div>
+
+<script>
+function enterArchive() {
+  document.getElementById("archive").classList.remove("hidden");
+  logAccess();
+}
+
+function deny() {
+  alert("ACCESS DENIED\nClearance level insufficient.");
+}
+
+function logAccess() {
+  const now = new Date();
+  document.getElementById("log").innerText =
+    "[LOG] Archive accessed at " + now.toLocaleTimeString();
+}
+</script>
+
+</body>
+</html>
